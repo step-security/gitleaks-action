@@ -3,6 +3,24 @@ import { readFileSync, existsSync } from "fs";
 import * as core from "@actions/core";
 import * as scanner from "./scanner";
 
+import axios, {isAxiosError} from 'axios'
+
+async function validateSubscription(): Promise<void> {
+  const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`
+
+  try {
+    await axios.get(API_URL, {timeout: 3000})
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 403) {
+      core.error(
+        'Subscription is not valid. Reach out to support@stepsecurity.io'
+      )
+      process.exit(1)
+    } else {
+      core.info('Timeout or API not reachable. Continuing to next step.')
+    }
+  }
+}
 // ============================================================================
 // REPORT MODULE - Generates GitHub Actions job report
 // ============================================================================
@@ -417,6 +435,7 @@ function handleScanResult(exitCode: number): void {
 
 // Main execution flow
 async function run(): Promise<void> {
+  await validateSubscription();
   const config = parseEnvironmentConfig();
   const eventInfo = getEventInfo();
 
