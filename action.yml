@@ -1,0 +1,9 @@
+name: gitleaks-action
+author: step-security
+branding:
+  icon: "git-pull-request"
+  color: "purple"
+description: run gitleaks on push and pull-request events
+runs:
+  using: "node24"
+  main: "dist/index.js"
