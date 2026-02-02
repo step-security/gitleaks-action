@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Gitleaks
-        uses: step-security/gitleaks-action@v1
+        uses: step-security/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -69,7 +69,7 @@ jobs:
 
 ```yaml
 - name: Run Gitleaks with custom config
-  uses: step-security/gitleaks-action@v1
+  uses: step-security/gitleaks-action@v2
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     GITLEAKS_VERSION: latest
