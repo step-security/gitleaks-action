@@ -1,0 +1,7 @@
+# False positives from bundled dependencies in dist/index.js
+# These are Azure Storage Emulator default keys (public knowledge, used for local testing)
+# Included in @actions/artifact package dependencies
+
+6ef25377ef5ab51c663d5a60729fc1719aca1aa0:dist/index.js:generic-api-key:87703
+6ef25377ef5ab51c663d5a60729fc1719aca1aa0:dist/index.js:generic-api-key:100457
+6ef25377ef5ab51c663d5a60729fc1719aca1aa0:dist/index.js:generic-api-key:102262

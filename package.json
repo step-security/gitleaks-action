@@ -1,0 +1,27 @@
+{
+  "name": "gitleaks-action",
+  "version": "1.0.0",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "build": "npm run compile && ncc build lib/main.js -o dist",
+    "clean": "rm -rf lib dist"
+  },
+  "dependencies": {
+    "@actions/artifact": "^6.1.0",
+    "@actions/cache": "^6.0.0",
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0",
+    "@actions/tool-cache": "^4.0.0",
+    "@octokit/rest": "^22.0.1",
+    "axios": "^1.13.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "@vercel/ncc": "^0.38.4",
+    "typescript": "^5.9.3"
+  }
+}
