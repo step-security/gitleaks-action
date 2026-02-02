@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Gitleaks
-        uses: step-security/gitleaks-action@v2
+        uses: step-security/gitleaks-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
