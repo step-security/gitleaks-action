@@ -116,29 +116,6 @@ Create a `gitleaks.toml` file in your repository root. The action will automatic
 
 See the [official Gitleaks configuration documentation](https://github.com/zricethezav/gitleaks#configuration) for configuration options.
 
-## Privacy & Security
-
-**Q: Does this action send data externally?**
-
-A: No. All scanning happens within your GitHub Actions runner. Your code never leaves GitHub's infrastructure. The action is fully self-contained.
-
-**Q: What data is stored?**
-
-A: Scan results are stored as GitHub Actions artifacts and optionally in PR comments. All data remains within your GitHub environment.
-
-## GitHub Code Scanning Integration
-
-While this action can upload SARIF files for GitHub Code Scanning, **we recommend against using it as a primary security tool** in that context.
-
-**Why?** If a secret is committed and then removed in a later commit, GitHub's security dashboard will mark the issue as resolved, even though the secret remains in git history. The proper remediation requires:
-
-1. Rotating the compromised credential
-2. Optionally rewriting git history to remove the secret entirely
-
-Use this action for **prevention and detection**, not just compliance reporting.
-
-## Troubleshooting
-
 ### False Positives
 
 Add fingerprints to `.gitleaksignore` in your repository:
@@ -147,10 +124,6 @@ Add fingerprints to `.gitleaksignore` in your repository:
 # The action will provide the exact fingerprint in PR comments
 echo "commit:file:rule:line" >> .gitleaksignore
 ```
-
-### No Commits to Scan
-
-If you see "No commits to scan", ensure your checkout action uses `fetch-depth: 0` to fetch the full git history.
 
 ### Permission Errors
 
