@@ -2,23 +2,39 @@ import { Octokit } from "@octokit/rest";
 import { readFileSync, existsSync } from "fs";
 import * as core from "@actions/core";
 import * as scanner from "./scanner";
-
+import * as github from "@actions/github";
 import axios, {isAxiosError} from 'axios'
 
-async function validateSubscription(): Promise<void> {
-  const API_URL = `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/subscription`
+async function validateSubscription() {
+  const repoPrivate = github.context?.payload?.repository?.private;
+
+  core.info(' ');
+  core.info('\u001b[1;33mStepSecurity Maintained Action\u001b[0m');
+  core.info(`Secure, reviewed, drop-in replacement for ${process.env.GITHUB_ACTION_REPOSITORY}`);
+  if (repoPrivate === false) {
+    core.info('\u001b[32m\u2713 Free for public repositories\u001b[0m');
+  }
+  core.info('\u001b[36mLearn more:\u001b[0m https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions');
+  core.info(' ');
+
+  if (repoPrivate === false) return;
+
+  const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
+  const body: Record<string, string> = { action: process.env.GITHUB_ACTION_REPOSITORY || '' };
+  if (serverUrl !== 'https://github.com') body.ghes_server = serverUrl;
 
   try {
-    await axios.get(API_URL, {timeout: 3000})
+    await axios.post(
+      `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/maintained-actions-subscription`,
+      body, { timeout: 3000 }
+    );
   } catch (error) {
     if (isAxiosError(error) && error.response?.status === 403) {
-      core.error(
-        'Subscription is not valid. Reach out to support@stepsecurity.io'
-      )
-      process.exit(1)
-    } else {
-      core.info('Timeout or API not reachable. Continuing to next step.')
+      core.error('This action requires a StepSecurity subscription for private repositories.');
+      core.error('Learn how to enable a subscription: https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions');
+      process.exit(1);
     }
+    core.info('Timeout or API not reachable. Continuing to next step.');
   }
 }
 // ============================================================================
