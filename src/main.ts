@@ -23,6 +23,9 @@ async function validateSubscription() {
   const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
   const body: Record<string, string> = { action: action || '' };
   if (serverUrl !== 'https://github.com') body.ghes_server = serverUrl;
+
+  core.debug(`Subscription check body: ${JSON.stringify(body)}`);
+
   try {
     await axios.post(
       `https://int.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/maintained-actions-subscription`,
