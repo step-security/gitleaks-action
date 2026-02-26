@@ -10,10 +10,12 @@ async function validateSubscription() {
   const action = process.env.GITHUB_ACTION_REPOSITORY;
   const docsUrl = 'https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions';
 
-  core.info(`\n\u001b[1;33mStepSecurity Maintained Action\u001b[0m`);
-  core.info(`\u001b[37mSecure, reviewed, drop-in replacement for ${action}\u001b[0m`);
+  core.info('');
+  core.info('\u001b[1;33mStepSecurity Maintained Action\u001b[0m');
+  core.info(`Secure, reviewed, drop-in replacement for ${action}`);
   if (repoPrivate === false) core.info('\u001b[32m\u2713 Free for public repositories\u001b[0m');
-  core.info(`\u001b[36m${docsUrl}\u001b[0m\n`);
+  core.info(`\u001b[36mLearn more:\u001b[0m ${docsUrl}`);
+  core.info('');
 
   if (repoPrivate === false) return;
 
