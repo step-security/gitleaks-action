@@ -12,8 +12,8 @@ async function validateSubscription() {
   const docsUrl = 'https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions';
 
   core.info('');
-  core.info('\u001b[1;33mStepSecurity Maintained Action\u001b[0m');
-  core.info(`Secure, reviewed, drop-in replacement for ${upstream}`);
+  core.info('\u001b[1;36mStepSecurity Maintained Action\u001b[0m');
+  core.info(`Secure drop-in replacement for ${upstream}`);
   if (repoPrivate === false) core.info('\u001b[32m\u2713 Free for public repositories\u001b[0m');
   core.info(`\u001b[36mLearn more:\u001b[0m ${docsUrl}`);
   core.info('');
